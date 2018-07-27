@@ -1,0 +1,280 @@
+<h1> Hi </h1>
+<h2>Register</h2>
+
+
+
+<div >
+        <center> 
+        <form name="form"  class="register-box" role="form" ng-show="!show">
+    
+            <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                <label for="username">Username</label>
+                <input type="text" 
+                       name="username" 
+                       style="width: 350px; height: 30px; margin-top: 20px;" 
+                       id="username" class="form-control"
+                       ng-model="RegisterCtrl.userName" 
+                       ng-pattern="/^[a-zA-Z\s]*$/"
+                       ng-minlength="3"
+                       ng-maxlength="8"
+                       required/>
+                <span ng-show="form.username.$error.minlength">Minimum length required is 3</span>
+                <span ng-show="form.username.$error.maxlength">Maximum length required is 8</span>
+                <span ng-show="form.username.$error.pattern">User name can include only letters</span>
+                <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+                <p>{{userNameError}}</p>
+            </div>
+            
+    
+            <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }" >
+                <label for="password">Password</label>
+                <input type="password"
+                       name="password" 
+                       style="width: 355px; height: 30px; margin-top: 20px;" 
+                       id="password" class="form-control"
+                       ng-minlength="5"
+                       ng-maxlength="10"
+                       ng-pattern="/^[a-zA-Z0-9.]\w{3,24}$/"
+                       ng-model="RegisterCtrl.password" required/>
+                <span ng-show="form.password.$error.minlength">Minimum length required is 5</span>
+                <span ng-show="form.password.$error.maxlength">Maximum length required is 10</span>
+                <span ng-show="form.password.$error.pattern">Password can include only numbers and letters</span>
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }" >
+                <label for="firstName">First Name</label>
+                <input type="text" 
+                       name="firstName" 
+                       style="width: 350px; height: 30px; margin-top: 20px;"
+                       id="firstName" class="form-control"
+                       ng-model="RegisterCtrl.firstName" required/>
+                <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">FirstName is required</span>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }" >
+                <label for="lastName">Last Name</label>
+                <input type="text" 
+                       name="lastName" 
+                       style="width: 350px; height: 30px; margin-top: 20px;"
+                       id="lastName" 
+                       class="form-control"
+                       ng-model="RegisterCtrl.lastName" required/>
+                <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">LastName is required</span>
+            </div>
+            
+            <div class="form-group" ng-class="{ 'has-error': form.city.$dirty && form.city.$error.required }" >
+                <label for="city">City</label>
+                <input type="text" 
+                       name="city" 
+                       style="width: 405px; height: 30px; margin-top: 20px;"
+                       id="city" class="form-control"
+                       ng-model="RegisterCtrl.city" required/>
+                <span ng-show="form.city.$dirty && form.city.$error.required" class="help-block">City is required</span>
+            </div>
+            
+            <div class="form-group" ng-class="{ 'has-error': form.chosen_country.$dirty && form.chosen_country.$error.required }" ng-init = "myFunc()" >
+                <label for="chosen_country">Country</label>
+                 <select type="text" 
+                       class="form-control" 
+                       name="chosen_country"
+                       style="width: 370px; height: 30px; margin-top: 20px;"
+                       id="chosen_country"
+                       ng-model="RegisterCtrl.chosen_country" required>
+                       <option ng-repeat="country in countries" value="{{country.Name}}">
+                        {{country.Name}}
+                         </option>
+                   </select>
+                <span ng-show="form.chosen_country.$dirty && form.chosen_country.$error.required" class="help-block">Country is required</span>
+            </div>
+            
+            <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }" >
+                <label for="email">Email</label>
+                <input type="text" 
+                       name="email" 
+                       style="width: 393px; height: 30px; margin-top: 20px;"
+                       id="email" class="form-control"
+                       ng-model="RegisterCtrl.email" required/>
+                <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
+            </div>
+           
+            <div class="form-group" ng-class="{ 'has-error': form.question.$dirty && form.question.$error.required }">
+                <label for="question">Question</label>
+                <select type="text" 
+                        class="form-control" 
+                        name="question" 
+                        style="width: 360px; height: 30px; margin-top: 20px;"
+                        id="question"
+                        ng-model="RegisterCtrl.question" required>
+                        <option value="1">What is the name of the first street you lived on?</option>
+                        <option value="2">Where did you born?</option>
+                        <option value="3">What is your favorite book?</option>
+                    </select>
+                <span  ng-show="registerForm.catInput.$touched">
+                <span ng-show="form.question.$dirty && form.question.$error.required" class="help-block">Question is required</span>
+            </div>
+            
+            <div class="form-group" ng-class="{ 'has-error': form.questionAns.$dirty && form.questionAns.$error.required }" >
+                <label for="questionAns">Answer</label>
+                <input type="text" 
+                       name="questionAns" 
+                       style="width: 370px; height: 30px; margin-top: 20px;"
+                       id="questionAns" class="form-control"
+                       ng-model="RegisterCtrl.questionAns" required/>
+                <span ng-show="form.questionAns.$dirty && form.questionAns.$error.required" class="help-block">QuestionAns is required</span>
+            </div>
+            <p style= "margin-top: 20px;">Please chose your favoriets categpries</p>
+            <p style= "margin-top: 20px;">(at least the first two):</p>
+            
+        
+            <div class="form-group" ng-class="{ 'has-error': form.favCatego1.$dirty && form.favCatego1.$error.required }">
+                <label for="favCatego1">Category 1</label>
+                 <select type="text" 
+                       class="form-control" 
+                       name="favCatego1"
+                       style="width: 350px; height: 30px; margin-top: 20px;"
+                       id="favCatego1"
+                       ng-model="RegisterCtrl.favCatego1"
+                       ng-change = "RegisterCtrl.setCategories1(RegisterCtrl.favCatego1)"
+                       required>
+                       <option ng-repeat="category in categories1" value="{{category.Category_Name}}">
+                        {{category.Category_Name}}
+                         </option>
+                   </select>
+                <span ng-show="form.favCatego1.$dirty && form.favCatego1.$error.required" class="help-block">You Have to chose at least 2 Categories</span>
+            </div>
+        
+            <div class="form-group" ng-class="{ 'has-error': form.favCatego2.$dirty && form.favCatego2.$error.required }">
+                    <label for="favCatego2">Category 2</label>
+                     <select type="text" 
+                           class="form-control" 
+                           name="favCatego2"
+                           style="width: 350px; height: 30px; margin-top: 20px;"
+                           id="favCatego2"
+                           ng-model="RegisterCtrl.favCatego2"
+                           ng-change = "RegisterCtrl.setCategories2(RegisterCtrl.favCatego2)"
+                           required>
+                           <option ng-repeat="category in categories2" value="{{category.Category_Name}}">
+                            {{category.Category_Name}}
+                             </option>
+                       </select>
+                    <span ng-show="form.favCatego2.$dirty && form.favCatego2.$error.required" class="help-block">You Have to chose at least 2 Categories</span>
+                </div>
+            
+            <div class="form-group" ng-class="{ 'has-error': form.favCatego3.$dirty && form.favCatego3.$error.required }">
+                    <label for="favCatego3">Category 3</label>
+                        <select type="text" 
+                            class="form-control" 
+                            name="favCatego3"
+                            style="width: 350px; height: 30px; margin-top: 20px;"
+                            id="favCatego3"
+                            ng-model="RegisterCtrl.favCatego3"
+                            ng-change = "RegisterCtrl.setCategories3(RegisterCtrl.favCatego3)">
+                            <option ng-repeat="category in categories3" value="{{category.Category_Name}}">
+                            {{category.Category_Name}}
+                                </option>
+                        </select>
+                </div>
+            
+            <div class="form-actions">
+                <div>
+                    <button class="btn btn-link" type="submit" ng-disabled="form.$invalid || RegisterCtrl.dataLoading" class="btn btn-primary"
+                        ng-click="RegisterCtrl.signUp()">Register
+                    </button>              
+                </div>
+            </div>   
+        </form>
+    </div>
+
+    <div ng-show="show">
+        <center>
+        <p> Your Registration Completed Successfully! </p>
+        <br></br>
+        <a href="#/Home" class="btn btn-link" >Move To Home Page</a>
+         </center>
+    </div>
+</center>
+<br></br>
+<div class="grid-container" >
+        <div ng-click="RegisterCtrl.openPOI(name1)" >{{name1}}</div>
+        <div ng-click="RegisterCtrl.openPOI(name2)">{{name2}}</div>
+        <div ng-click="RegisterCtrl.openPOI(name3)">{{name3}}</div>
+        <div >
+            <figure class="myphoto">
+                <img ng-src="{{url1}}" style="width:100%" ng-click="RegisterCtrl.openPOI(name1)"></img>
+            </figure>
+        </div>
+        <div >
+                <figure class="myphoto">
+            <img ng-src="{{url2}}" style="width:100%" ng-click="RegisterCtrl.openPOI(name2)"></img>
+        </figure>
+                </div>
+        <div>
+                <figure class="myphoto">
+            <img ng-src="{{url3}}" style="width:100%" ng-click="RegisterCtrl.openPOI(name3)"></img>
+            </figure>
+        </div>
+</div>
+
+</div>
+
+<div id="poiModal" class="modal-POI">    
+        <div class="modal-content">  
+            <div>
+                <h2>{{POIName}}</h2>
+                <div class="col span-1-of-3" style="margin-left: 30%;" >
+                        <i class="ion-trophy icon-big"></i>
+                        <h3>Rank: {{Rank}}%</h3>
+                    </div>
+                    <div class="col span-1-of-3" "margin-right: 30%;">
+                        <i class="ion-eye icon-big"></i>
+                        <h3>Views: {{NumOfViews}}</h3>
+                    </div>
+                    <div class="col span-1-of-3">
+                            <div class="qa-box" style="margin-left: 20%">
+                                <div class="box-content">
+                                    <h3>Discription</h3>
+                                </div>
+                                <div>
+                                    <ul>
+                                            <li>{{Description}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col span-1-of-5">
+                        </div>
+                    <div class="col span-1-of-3" style="margin-right: 5%">
+                            <div class="poipic1-box" >
+                               <div class="poipic2-box" >
+                                    <div class="box-content">
+                                    <figure  class="myphoto" >
+                                            <img ng-src="{{POIPicture}}"></img>
+                                    </figure>
+                                </div>
+                                 </div>
+                            </div>
+                        </div>
+                        </div>
+                    
+                        <div class="row" >
+        
+                                <div class="col span-1-of-2 box" >
+                                <div style="margin-left: 40%">
+                                    <i class="ion-ios-chatboxes icon-big"></i>
+                                    <p>Review Date:</p>
+                                    <p>{{Review1Date}}</p>
+                                    <h3>{{Review1}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col span-1-of-2 box">
+                                        <div style="margin-right: 15%; margin-left: 20%;">
+                                        <i class="ion-ios-chatboxes icon-big"></i>
+                                        <p>Review Date:</p>
+                                        <p>{{Review2Date}}</p>
+                                    <h3>{{Review2}}</h3>
+                                    </div>
+                                </div>
+                       </div>
+            </div>
+        </div>
+        </div>

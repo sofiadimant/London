@@ -1,0 +1,60 @@
+
+
+<html ng-app="citiesApp">
+    <head><title>Cities App</title>
+        <link rel="stylesheet" type="text/css" href="vendoors/css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="vendoors/css/Grid.css">
+        <link rel="stylesheet" type="text/css" href="vendoors/css/ionicons.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/latofonts.css">
+    </head>
+    <body ng-controller="indexController as indxCtrl">
+        <nav>
+        <div class="float-menu" ></div>
+            <div id="menu" >
+                <ul class="main-nav">
+                    <li ng-show= "!isGest"><a href="#/Home"><i class="ion-android-home"></i>  Home</a></li>
+                    <li ng-show= "isGest"><a class="active" href="#/"><i class="ion-log-in"></i>  Log In</a></li>
+                    <li ng-show= "!isGest"><a class="active" href="" ng-click="indxCtrl.logOut()"><i class="ion-log-out"></i>  Log Out</a></li>
+                    <li><a href="#/about"><i class="fa fa-shield"></i>About</a></li>
+                    <li ng-show= "isGest"><a href="#/Register"><i class="fa fa-shield"></i>Register</a></li>
+                    <li><a href="#/POI"><i class="fa fa-shield"></i>Point Of Interest</a></li>
+                    <li ng-show= "!isGest"><a ng-model ="favCounter" href="#/Favorites" class="ion-android-favorite" >{{favCounter}}</a></li>
+                </ul>
+                <ul class="main-nav-name" >
+                    <li ng-show= "!isGest"><a><i class="fa fa-shield" ng-model="userName"></i>Hello {{userName}}</a></li>
+                    <li ng-show= "isGest"><a><i class="fa fa-shield" ng-model="indxCtrl.userName"></i>Hello gest</a></li>
+                </ul>
+           </div>
+    </nav>  
+        <br>
+        <br>
+        <div  ng-view></div>
+
+ 
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>  
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>    
+        <script src="xml2json.js"></script>
+        <script src="app.js" ></script>
+        <script src="indexController.js" ></script>
+        <script src="components/About/aboutController.js" ></script>
+        <script src="components/Register/RegisterController.js" ></script>
+        <script src="components/RestorePassword/RestorePasswordController.js" ></script>
+        <script src="components/LogIn/LogInController.js" ></script>
+        <script src="localStorageModel.js"></script>
+        <script src="components/Home/HomeController.js"></script>
+        <script src="components/POIPage/pageController.js"></script>
+        <script src="components/POI/POIController.js"></script> 
+        <script src="components/FavPOI/FavController.js"></script>
+ 
+    </body>
+    </html>
+
+   
+  
+    
+    
+
+    

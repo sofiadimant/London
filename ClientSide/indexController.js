@@ -1,0 +1,82 @@
+angular.module('citiesApp')
+
+ .controller('indexController',['$scope','$http','setHeadersToken','localStorageModel',function ($scope,$http,setHeadersToken,localStorageModel) {
+
+
+        self = this;
+        
+        $scope.isGest =true
+        $scope.userName = ""
+        $scope.token
+        $scope.favCounter = 0
+
+
+        self.checkToken = function () {
+            let tempToken = localStorageModel.getLocalStorage("token");
+            if (!(tempToken === null)){
+                let massage = "http://localHost:3000/POI/checkToken?token="+tempToken
+                $http.get(massage)
+                .then(function (response) {
+                    console.log(tempToken)
+                    if(response.data.message === "Failed to authenticate token."){
+                        localStorageModel.removeLocalStorage("token")
+                        localStorageModel.removeLocalStorage("userName")
+                        localStorageModel.updateLocalStorage("favorites",null)
+                        localStorageModel.updateLocalStorage("favoritesNum",0)
+                        $scope.isGest = true
+                        $scope.userName = "gest"
+                    }
+                    else if(response.data ==="The token is valid"){
+                        $scope.userName = localStorageModel.getLocalStorage("userName");
+                        $scope.favCounter = localStorageModel.getLocalStorage("favoritesNum");
+                        $scope.isGest=false
+                        window.open("index.html#/Home","_self")
+                    }
+                    
+               }, function (response) {
+   
+                   "Something went wrong with LogIn";
+               });
+
+
+            }
+            else{
+                $scope.isGest = true
+                $scope.userName = "gest"
+            }
+        }
+
+        self.checkToken();
+
+        self.logOut = function(){
+            localStorageModel.updateLocalStorage("token",null)
+            localStorageModel.updateLocalStorage("userName",null)
+            localStorageModel.updateLocalStorage("favorites",null)
+            localStorageModel.updateLocalStorage("favoritesNum",0)
+            $scope.isGest = true
+            $scope.userName = "gest"
+            window.open("index.html#/","_self")
+        }
+
+        self.upDateUser = function(userName_, gest_ ){
+            $scope.isGest = gest_;
+            $scope.userName = userName_;
+        }
+
+        self.updateFavNum = function(nuberOfFav){
+            $scope.favCounter = nuberOfFav;
+            localStorageModel.updateLocalStorage("favoritesNum",$scope.favCounter)
+        }
+
+        self.isGuest = function(){
+            return $scope.isGest;
+        }
+
+        self.getFavCounter = function(){
+           return $scope.favCounter
+        }
+
+
+
+    }]);
+

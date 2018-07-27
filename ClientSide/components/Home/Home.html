@@ -1,0 +1,100 @@
+
+<h2 style="margin-top: 150px">Your Most Popular Point Of Interest</h2>
+<div class="grid-container-homePage" >
+    <div ng-repeat="poi in recordsPop"  >
+        <div class="grid-item-POI" ng-bind="poi.POI_Name" ng-click="HomeCtrl.openPOI(poi.POI_Name)"></div>
+        <div class="grid-item-POI" >
+            <figure  class="myphoto" >
+                <img ng-src="{{poi.POI_Picture}}" ng-click="HomeCtrl.openPOI(poi.POI_Name)"></img>
+            </figure>
+        </div>
+    </div>  
+</div>
+
+
+<h2 style="margin-top: 150px" >Recent saved Point Of Interest</h2>
+<div class="grid-container-homePage" >
+    <div ng-repeat="poi in recordsSav"  >
+        <div class="grid-item-POI" ng-bind="poi.POI_Name" ng-click="HomeCtrl.openPOI(poi.POI_Name)"></div>
+        <div class="grid-item-POI" >
+            <figure  class="myphoto" >
+                <img ng-src="{{poi.POI_Picture}}" ng-click="HomeCtrl.openPOI(poi.POI_Name)"></img>
+            </figure>
+        </div>
+    </div>  
+</div>
+<center>
+<div  ng-model="HomeCtrl.massage1">
+    <p>{{massage1}}</p>
+</div>
+<br></br>
+</center>
+
+<div id="poiModal" class="modal-POI">    
+        <div class="modal-content">  
+            <div>
+                <h2 ng-class="{'ion-android-favorite' : ifFav()== true,'ion-android-favorite-outline' :  ifFav()== false  }" ng-click="AddRemove()">   {{POIName}}</h2>
+                <div class="col span-1-of-3" style="margin-left: 30%;" >
+                        <i class="ion-trophy icon-big"></i>
+                        <h3>Rank: {{Rank}}%</h3>
+                    </div>
+                    <div class="col span-1-of-3" "margin-right: 30%;">
+                        <i class="ion-eye icon-big"></i>
+                        <h3>Views: {{NumOfViews}}</h3>
+                    </div>
+                    <div class="col span-1-of-3">
+                            <div class="qa-box" style="margin-left: 20%">
+                                <div class="box-content">
+                                    <h3>Discription</h3>
+                                </div>
+                                <div>
+                                    <ul>
+                                            <li>{{Description}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col span-1-of-5">
+                        </div>
+                    <div class="col span-1-of-3" style="margin-right: 5%">
+                            <div class="poipic1-box" >
+                               <div class="poipic2-box" >
+                                    <div class="box-content">
+                                    <figure  class="myphoto" >
+                                            <img ng-src="{{POIPicture}}"></img>
+                                    </figure>
+                                </div>
+                                 </div>
+                            </div>
+                        </div>
+                        </div>
+                    
+                        <div class="row" >
+        
+                                <div class="col span-1-of-2 box" >
+                                <div style="margin-left: 40%">
+                                    <i class="ion-ios-chatboxes icon-big"></i>
+                                    <p>Review Date:</p>
+                                    <p>{{Review1Date}}</p>
+                                    <h3>{{Review1}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col span-1-of-2 box">
+                                        <div style="margin-right: 15%; margin-left: 20%;">
+                                        <i class="ion-ios-chatboxes icon-big"></i>
+                                        <p>Review Date:</p>
+                                        <p>{{Review2Date}}</p>
+                                    <h3>{{Review2}}</h3>
+                                    </div>
+                                </div>
+                       </div>
+            </div>
+        </div>
+        </div>
+
+
+
+
+
+
+    

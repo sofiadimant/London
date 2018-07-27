@@ -1,0 +1,139 @@
+<h2>LogIn</h2>
+
+<div>
+    <section  class="londonFoter">
+        <center>
+        <div class="row">
+                <p>YOU WANT TO PLAN YOUR BEST TRIP EVER IN LONDON? REGISTER NOW AND START PLAN IT!</p>
+                <a href="#/Register" class="btn1 btn1-link">REGISTER NOW!</a>
+        </div>
+    </center>
+    </section>
+</div>       
+<br>
+<center>
+    <form class= "logIn-box" name="form" role="form"  ng-show="!show">
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Username</label>
+            <input  type="text" 
+                    name="username" 
+                     style="width: 350px; height: 30px; margin-top: 20px; margin-bottom: 20px;"
+                    id="username" class="form-control"
+                    ng-model="LogInCtrl.userName" 
+                    placeholder="Enter Username"
+                    required/>
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password" >Password</label>
+            <input  type="password"
+                    name="password" 
+                    style="width: 350px; height: 30px; margin-top: 20px;"
+                    id="password" class="form-control"
+                    placeholder="Enter Password"
+                    ng-model="LogInCtrl.password" required/>
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+        <p>{{massage}}</p>
+        <div class="form-actions">
+                <a  href="" class="btn btn-link" type="submit" ng-disabled="form.$invalid || LogInCtrl.dataLoading" class="btn btn-primary"
+                        ng-click="LogInCtrl.LogIn()">Submit</a>
+        </div>
+        <a  href="#/RestorePassword" class="btn btn-link">Forgot Your Password?</a>
+    </form>
+
+    <div ng-show="show">
+        <center>
+        <p> Your Log In Completed Successfully! </p>
+        <br></br>
+        <a href="#/Home" class="btn btn-link" >Move To Home Page</a>
+         </center>
+    </div>
+    </center>
+ <br></br>
+            <div class="grid-container" >
+                <div ng-click="LogInCtrl.openPOI(name1)" >{{name1}}</div>
+                <div ng-click="LogInCtrl.openPOI(name2)">{{name2}}</div>
+                <div ng-click="LogInCtrl.openPOI(name3)">{{name3}}</div>
+                <div >
+                    <figure class="myphoto">
+                        <img ng-src="{{url1}}" style="width:100%" ng-click="LogInCtrl.openPOI(name1)"></img>
+                    </figure>
+                </div>
+                <div >
+                        <figure class="myphoto">
+                    <img ng-src="{{url2}}" style="width:100%" ng-click="LogInCtrl.openPOI(name2)"></img>
+                </figure>
+                        </div>
+                <div>
+                        <figure class="myphoto">
+                    <img ng-src="{{url3}}" style="width:100%" ng-click="LogInCtrl.openPOI(name3)"></img>
+                    </figure>
+                </div>
+        </div>
+
+</div>
+
+<div id="poiModal" class="modal-POI">    
+    <div class="modal-content">  
+        <div>
+            <h2>   {{POIName}}</h2>
+            <div class="col span-1-of-3" style="margin-left: 30%;" >
+                    <i class="ion-trophy icon-big"></i>
+                    <h3>Rank: {{Rank}}%</h3>
+                </div>
+                <div class="col span-1-of-3" "margin-right: 30%;">
+                    <i class="ion-eye icon-big"></i>
+                    <h3>Views: {{NumOfViews}}</h3>
+                </div>
+                <div class="col span-1-of-3">
+                        <div class="qa-box" style="margin-left: 20%">
+                            <div class="box-content">
+                                <h3>Discription</h3>
+                            </div>
+                            <div>
+                                <ul>
+                                        <li>{{Description}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col span-1-of-5">
+                    </div>
+                <div class="col span-1-of-3" style="margin-right: 5%">
+                        <div class="poipic1-box" >
+                           <div class="poipic2-box" >
+                                <div class="box-content">
+                                <figure  class="myphoto" >
+                                        <img ng-src="{{POIPicture}}"></img>
+                                </figure>
+                            </div>
+                             </div>
+                        </div>
+                    </div>
+                    </div>
+                
+                    <div class="row" >
+    
+                            <div class="col span-1-of-2 box" >
+                            <div style="margin-left: 40%">
+                                <i class="ion-ios-chatboxes icon-big"></i>
+                                <p>Review Date:</p>
+                                <p>{{Review1Date}}</p>
+                                <h3>{{Review1}}</h3>
+                                </div>
+                            </div>
+                            <div class="col span-1-of-2 box">
+                                    <div style="margin-right: 15%; margin-left: 20%;">
+                                    <i class="ion-ios-chatboxes icon-big"></i>
+                                    <p>Review Date:</p>
+                                    <p>{{Review2Date}}</p>
+                                <h3>{{Review2}}</h3>
+                                </div>
+                            </div>
+                   </div>
+        </div>
+    </div>
+    </div>
+  

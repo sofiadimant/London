@@ -1,0 +1,131 @@
+<div stayle="background-color: #f4f4f4">
+        <br>
+        <H2>Point Of Interest In London</H2>
+        <div class="poi2-box">
+                <p class="lable"  ng-show="show">Filter</p>
+                <select type="text" 
+                        class="form-control" 
+                        ng-show="show"
+                        name="chosen_catergory"
+                        style="width: 200px; height: 30px;margin-left: 2%;margin-top: 1%;"
+                        id="chosen_catergory"
+                        ng-change="selectedItemChanged()"
+                        ng-model="selectedCat" required>
+                        <option ng-repeat="catrgory in categories" value="{{catrgory.Category_Name}}">{{catrgory.Category_Name}} </option>
+                </select>
+                <a href="#/POI" class="btn btn-link" ng-click="changeFilter=true" ng-show="show" >Order by Rank</a>
+                <a href="#/POI" class="btn btn-link" ng-show="!showCancelBtn" ng-click=cancelFilter() >Cancel Filter</a>
+                <p class="lable" >Search</p>
+                <input  type="text" 
+                        name="searchPOI" 
+                        style="width: 200px; height: 30px;margin-left: 2%;margin-top: 1%;"
+                        id="username" class="form-control"
+                        ng-model="searchPOI" />
+                <a href="#/POI" class="btn btn-link" ng-click="serachPOI()">Search</a>
+                <a href="#/POI" class="btn btn-link" ng-show="!show" ng-click="setShowAll()" >Show All</a>
+                <p  class="lable" ng-show="showSecces">Yea! We Found Your Point :)</p>
+                <p class="lable" ng-show="showWarning" >Point of interest didn't found :(</p>
+        </div>
+        <div class="grid-container-POI"  style="margin-top: 50px" ng-show="show">
+                <div ng-repeat="poi in records| filter:{Category_Name:selectedCat}  | orderBy: !changeFilter ? 'Category_Name' :'Rank_Per'"  >
+                        <br>
+                        <br>
+                        <div class="grid-item-POI" >              
+                                <i ng-click="POICtrl.openPOI(poi.POI_Name)">{{poi.POI_Name}}
+                                   <p  ng-show="!Guest"  ng-class="{'ion-android-favorite' : ifFav(poi.POI_Name)== true,'ion-android-favorite-outline' :  ifFav(poi.POI_Name)== false  }" ng-click="AddRemove(poi.POI_Name)"/>
+                                </i>                  
+                        </div>
+                    
+                        <div class="grid-item-POI-inner">
+                                <i >  Rank: {{poi.Rank_Per}}%, Category: {{poi.Category_Name}} </i>                               
+                        </div>
+                        <div class="grid-item-POI" >
+                                <figure  class="myphoto" >
+                                    <img ng-src="{{poi.POI_Picture}}" ng-click="POICtrl.openPOI(poi.POI_Name)"></img>
+                                </figure>
+                        </div> 
+                </div>
+        </div>
+        <br>
+        <div  class="grid-container2" ng-show="!show">
+                <div class="grid-item-POI2" ng-bind="SearchPoi.POI_Name" ng-click="POICtrl.openPOI(SearchPoi.POI_Name)"></div>
+                <div  class="grid-item-POI2-inner">
+                    <i>  Rank: {{SearchPoi.Rank_Per}}%, Category: {{SearchPoi.Category_Name}} </i>   
+                </div>
+                <div  class="grid-item-POI2" >
+                        <figure  class="myphoto" >
+                            <img ng-src="{{SearchPoi.POI_Picture}}" ng-click="POICtrl.openPOI(SearchPoi.POI_Name)"></img>
+                        </figure>
+                </div> 
+        </div>
+        <br>
+        <br>
+        <br>
+        </div>
+
+        <div id="poiModal" class="modal-POI">    
+                <div class="modal-content">  
+                    <div>
+             
+                        <h2 ng-show="Guest">   {{POIName}}  </h2>                       
+                       <h2   ng-show="!Guest" ng-class="{'ion-android-favorite' : ifFav(POIName)== true,'ion-android-favorite-outline' :  ifFav(POIName)== false  }" ng-click="AddRemove(POIName)">   {{POIName}}</h2>
+                        <div class="col span-1-of-3" style="margin-left: 30%;" >
+                                <i class="ion-trophy icon-big"></i>
+                                <h3>Rank: {{Rank}}%</h3>
+                            </div>
+                            <div class="col span-1-of-3" "margin-right: 30%;">
+                                <i class="ion-eye icon-big"></i>
+                                <h3>Views: {{NumOfViews}}</h3>
+                            </div>
+                            <div class="col span-1-of-3">
+                                    <div class="qa-box" style="margin-left: 20%">
+                                        <div class="box-content">
+                                            <h3>Discription</h3>
+                                        </div>
+                                        <div>
+                                            <ul>
+                                                    <li>{{Description}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col span-1-of-5">
+                                </div>
+                            <div class="col span-1-of-3" style="margin-right: 5%">
+                                    <div class="poipic1-box" >
+                                       <div class="poipic2-box" >
+                                            <div class="box-content">
+                                            <figure  class="myphoto" >
+                                                    <img ng-src="{{POIPicture}}"></img>
+                                            </figure>
+                                        </div>
+                                         </div>
+                                    </div>
+                                </div>
+                                </div>
+                            
+                                <div class="row" >
+                
+                                        <div class="col span-1-of-2 box" >
+                                        <div style="margin-left: 40%">
+                                            <i class="ion-ios-chatboxes icon-big"></i>
+                                            <p>Review Date:</p>
+                                            <p>{{Review1Date}}</p>
+                                            <h3>{{Review1}}</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col span-1-of-2 box">
+                                                <div style="margin-right: 15%; margin-left: 20%;">
+                                                <i class="ion-ios-chatboxes icon-big"></i>
+                                                <p>Review Date:</p>
+                                                <p>{{Review2Date}}</p>
+                                            <h3>{{Review2}}</h3>
+                                            </div>
+                                        </div>
+                               </div>
+                    </div>
+                </div>
+                </div>
+        
+        
+        

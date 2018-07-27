@@ -1,0 +1,156 @@
+<h2 ng-show="!noFav">My Favoriets</h2>
+
+<h2 ng-show="noFav">No Favoriets</h2>
+
+
+<center>
+<p ng-show="!noFav">Push on the hart sign to remove from favoriets</p>
+    <div  ng-show="!noFav">
+        <a href="#/Favorites" class="btn btn-link"  ng-click="sortBy = 'Category_Name'">Order By Category</a>
+        <a href="#/Favorites" class="btn btn-link"  ng-click="sortBy = 'Rank_Per'">Order By Rank</a>
+        <a href="#/Favorites" class="btn btn-link"  ng-click="sortBy = 'rank'" >Order By Personal order</a>
+    </div>
+</center>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div ng-show="!noFav">
+]       <div class="grid-container-POI"  style="margin-top: 50px">
+            <div ng-repeat="poi in records | orderBy: sortBy" >
+                <div class="grid-item-POI" >              
+                        <i ng-bind="poi.POI_Name" ng-click="openPOI(poi.POI_Name)"></i>                  
+                </div>
+                <div class="grid-item-POI-inner">
+                    <i class="ion-android-favorite" ng-bind="poi.POI_Name" ng-click="remove(poi.POI_Name)">  Rank: {{poi.Rank_Per}}%, Category: {{poi.Category_Name}} </i>                               
+                </div>     
+                <div class="grid-item-POI-inner">
+                    <i > Rank: {{poi.Rank_Per}}%, Category: {{poi.Category_Name}} </i>                               
+              </div>         
+                <div class="grid-item-POI" >
+                    <figure  class="myphoto">
+                        <img ng-src="{{poi.POI_Picture}}" ng-click="openPOI(poi.POI_Name)"></img>
+                    </figure>
+                </div> 
+               
+            <center>
+            <a href="#/Favorites" class="btn btn-link" id="myBtn" ng-click="click(poi.POI_Name)">Add Rank And Review</a>
+            </center>
+        </div>   
+    </div>
+    <br>   
+    <p>{{addReviewResult}}</p>
+    <br>
+    <div id="myModal1" class="modal1">    
+        <div class="modal-content"> 
+            <span class="close">&times;</span>
+            <h2>Add Rank And Review</h2> 
+            <center>
+            <label>Add your review</label>
+            <input placeholder="Write Review" ng-model="review" style="height: 30px; width: 500px;"> </input>    
+            <a href="#/Favorites" class="btn btn-link" ng-click="AddReview(review)">Set Review</a>
+            <p>{{addReviewResult}}</p>
+            <div>
+                <label>Add your rank</label>
+                <select style="height: 30px; width:200px" ng-model="selectedRank"  ng-init="selectedRank = rank[0]">
+                    <option ng-repeat="x in rank">{{x}}</option>
+                </select>     
+                <a href="#/Favorites" class="btn btn-link" ng-click="AddRank()">Set Rank</a>
+                <p>{{RankViewResult}}</p>
+                <br>   
+            </div>
+            </center>
+        </div>
+    </div>
+   
+    <h2>Set your own order:</h2>
+    <center>
+        <div class ="favoriets-box">
+            <div>
+                <p>Select Point Name</p>
+                <select style="width:150px" ng-model="selectedPOI">
+                    <option ng-repeat="poi in records">{{poi.POI_Name}}</option>
+                </select> 
+            </div>
+            <div>
+                <br>
+                <p>Select Points order</h2>
+                <div>
+                    <select style="width:150px" ng-model="selectedOrder"  >
+                        <option ng-repeat="poi in NumOfPOI">{{poi}}</option>
+                    </select> 
+                    <p>{{warnning}}</p>
+                </div>
+            </div>
+        <a href="#/Favorites" class="btn btn-link" ng-click="SortByUser({POI_Name: selectedPOI,rank: selectedOrder})">Save Personal Order</a>         
+        </div>
+    </center>
+         <br>     
+    <br>
+</body>
+
+         <div id="poiModal" class="modal-POI">    
+                <div class="modal-content">  
+                    <div>
+                            <h2 ng-class="{'ion-android-favorite' : ifFav()== true,'ion-android-favorite-outline' :  ifFav()== false  }" ng-click="AddRemove()">   {{POIName}}</h2>
+                        <div class="col span-1-of-3" style="margin-left: 30%;" >
+                                <i class="ion-trophy icon-big"></i>
+                                <h3>Rank: {{Rank}}%</h3>
+                            </div>
+                            <div class="col span-1-of-3" "margin-right: 30%;">
+                                <i class="ion-eye icon-big"></i>
+                                <h3>Views: {{NumOfViews}}</h3>
+                            </div>
+                            <div class="col span-1-of-3">
+                                    <div class="qa-box" style="margin-left: 20%">
+                                        <div class="box-content">
+                                            <h3>Discription</h3>
+                                        </div>
+                                        <div>
+                                            <ul>
+                                                    <li>{{Description}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col span-1-of-5">
+                                </div>
+                            <div class="col span-1-of-3" style="margin-right: 5%">
+                                    <div class="poipic1-box" >
+                                       <div class="poipic2-box" >
+                                            <div class="box-content">
+                                            <figure  class="myphoto" >
+                                                    <img ng-src="{{POIPicture}}"></img>
+                                            </figure>
+                                        </div>
+                                         </div>
+                                    </div>
+                                </div>
+                                </div>
+                            
+                                <div class="row" >
+                
+                                        <div class="col span-1-of-2 box" >
+                                        <div style="margin-left: 40%">
+                                            <i class="ion-ios-chatboxes icon-big"></i>
+                                            <p>Review Date:</p>
+                                            <p>{{Review1Date}}</p>
+                                            <h3>{{Review1}}</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col span-1-of-2 box">
+                                                <div style="margin-right: 15%; margin-left: 20%;">
+                                                <i class="ion-ios-chatboxes icon-big"></i>
+                                                <p>Review Date:</p>
+                                                <p>{{Review2Date}}</p>
+                                            <h3>{{Review2}}</h3>
+                                            </div>
+                                        </div>
+                               </div>
+                    </div>
+                </div>
+                </div>
+                <center>
+                    <h2>Save YOUR Favorites</h2>
+                <a href="#/Favorites" class="btn btn-link"  ng-click="SaveChanges()" >Save</a>
+                </center>
