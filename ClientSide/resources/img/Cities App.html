@@ -1,0 +1,207 @@
+
+<!-- saved from url=(0038)http://127.0.0.1:5500/index.html#/Home -->
+<html ng-app="citiesApp" class="ng-scope"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style><title>Cities App</title>
+        <link rel="stylesheet" type="text/css" href="./Cities App_files/normalize.css">
+        <link rel="stylesheet" type="text/css" href="./Cities App_files/Grid.css">
+        <link rel="stylesheet" type="text/css" href="./Cities App_files/ionicons.min.css">
+        <link rel="stylesheet" type="text/css" href="./Cities App_files/styles.css">
+        <link rel="stylesheet" type="text/css" href="./Cities App_files/latofonts.css">
+    </head>
+    <body ng-controller="indexController as indxCtrl" class="ng-scope" style="">
+        <nav>
+        <div class="float-menu"></div>
+            <div id="menu">
+                <ul class="main-nav">
+                    <li ng-show="!isGest" class=""><a href="http://127.0.0.1:5500/index.html#/Home"><i class="ion-android-home"></i>  Home</a></li>
+                    <li ng-show="isGest" class="ng-hide"><a class="active" href="http://127.0.0.1:5500/index.html#/"><i class="ion-log-in"></i>  Log In</a></li>
+                    <li ng-show="!isGest" class=""><a class="active" href="http://127.0.0.1:5500/index.html" ng-click="indxCtrl.logOut()"><i class="ion-log-out"></i>  Log Out</a></li>
+                    <li><a href="http://127.0.0.1:5500/index.html#/about"><i class="fa fa-shield"></i>About</a></li>
+                    <li ng-show="isGest" class="ng-hide"><a href="http://127.0.0.1:5500/index.html#/Register"><i class="fa fa-shield"></i>Register</a></li>
+                    <li><a href="http://127.0.0.1:5500/index.html#/POI"><i class="fa fa-shield"></i>Point Of Interest</a></li>
+                    <li ng-show="!isGest" class=""><a ng-model="favCounter" href="http://127.0.0.1:5500/index.html#/Favorites" class="ion-android-favorite ng-pristine ng-untouched ng-valid ng-binding ng-not-empty">2</a></li>
+                </ul>
+                <ul class="main-nav-name">
+                    <li ng-show="!isGest" class=""><a class="ng-binding"><i class="fa fa-shield ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="userName"></i>Hello sofia</a></li>
+                    <li ng-show="isGest" class="ng-hide"><a><i class="fa fa-shield ng-pristine ng-untouched ng-valid ng-empty" ng-model="indxCtrl.userName"></i>Hello gest</a></li>
+                </ul>
+           </div>
+    </nav>  
+        <br>
+        <br>
+        <!-- ngView: --><div ng-view="" class="ng-scope">
+<h2 style="margin-top: 150px" class="ng-scope">Your Most Popular Point Of Interest</h2>
+<div class="grid-container-homePage ng-scope">
+    <!-- ngRepeat: poi in recordsPop --><div ng-repeat="poi in recordsPop" class="ng-scope">
+        <div class="grid-item-POI ng-binding" ng-bind="poi.POI_Name" ng-click="HomeCtrl.openPOI(poi.POI_Name)">Big Ben</div>
+        <div class="grid-item-POI">
+            <figure class="myphoto">
+                <img ng-src="https://cdn.getyourguide.com/niwziy2l9cvz/3TLDUtWWacU8gwW0o6m4km/7e9164a5dd180d8d29dec20142897f24/london-bigben-1500x850.jpg" ng-click="HomeCtrl.openPOI(poi.POI_Name)" src="./Cities App_files/london-bigben-1500x850.jpg">
+            </figure>
+        </div>
+    </div><!-- end ngRepeat: poi in recordsPop --><div ng-repeat="poi in recordsPop" class="ng-scope">
+        <div class="grid-item-POI ng-binding" ng-bind="poi.POI_Name" ng-click="HomeCtrl.openPOI(poi.POI_Name)">Madame Tussauds</div>
+        <div class="grid-item-POI">
+            <figure class="myphoto">
+                <img ng-src="http://en.bluebayou.co/wp-content/uploads/royals-tussaud.jpg" ng-click="HomeCtrl.openPOI(poi.POI_Name)" src="./Cities App_files/royals-tussaud.jpg">
+            </figure>
+        </div>
+    </div><!-- end ngRepeat: poi in recordsPop -->  
+</div>
+
+
+<h2 style="margin-top: 150px" class="ng-scope">Recent saved Point Of Interest</h2>
+<div class="grid-container-homePage ng-scope">
+    <!-- ngRepeat: poi in recordsSav --><div ng-repeat="poi in recordsSav" class="ng-scope">
+        <div class="grid-item-POI ng-binding" ng-bind="poi.POI_Name" ng-click="HomeCtrl.openPOI(poi.POI_Name)">Buckingham Palace</div>
+        <div class="grid-item-POI">
+            <figure class="myphoto">
+                <img ng-src="https://changing-guard.com/images/content/Buckingham-Palace-02.jpg" ng-click="HomeCtrl.openPOI(poi.POI_Name)" src="./Cities App_files/Buckingham-Palace-02.jpg">
+            </figure>
+        </div>
+    </div><!-- end ngRepeat: poi in recordsSav --><div ng-repeat="poi in recordsSav" class="ng-scope">
+        <div class="grid-item-POI ng-binding" ng-bind="poi.POI_Name" ng-click="HomeCtrl.openPOI(poi.POI_Name)">London Eye</div>
+        <div class="grid-item-POI">
+            <figure class="myphoto">
+                <img ng-src="https://cdn.civitatis.com/reino-unido/londres/galeria/london-eye-atardecer.jpg" ng-click="HomeCtrl.openPOI(poi.POI_Name)" src="./Cities App_files/london-eye-atardecer.jpg">
+            </figure>
+        </div>
+    </div><!-- end ngRepeat: poi in recordsSav -->  
+</div>
+<center class="ng-scope">
+<div ng-model="HomeCtrl.massage1" class="ng-pristine ng-untouched ng-valid ng-empty">
+    <p class="ng-binding"></p>
+</div>
+<br><br>
+</center>
+
+<div id="poiModal" class="modal-POI ng-scope">    
+    <div class="modal-content">  
+        <div>
+            <h2 class="ng-binding"></h2>
+            <div class="col span-1-of-3" style="margin-left: 30%;">
+                    <i class="ion-trophy icon-big"></i>
+                    <h3 class="ng-binding">Rank: %</h3>
+                </div>
+                <div class="col span-1-of-3" "margin-right:="" 30%;"="">
+                    <i class="ion-eye icon-big"></i>
+                    <h3 class="ng-binding">Views: </h3>
+                </div>
+                <div class="col span-1-of-3">
+                        <div class="qa-box" style="margin-left: 20%">
+                            <div class="box-content">
+                                <h3>Discription</h3>
+                            </div>
+                            <div>
+                                <ul>
+                                        <li class="ng-binding"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col span-1-of-5">
+                    </div>
+                <div class="col span-1-of-3" style="margin-right: 5%">
+                        <div class="qa-box">
+                                <div class="box-content">
+                                <figure class="myphoto">
+                                        <img>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                
+                    <div class="row">
+
+                            <div class="col span-1-of-2 box">
+                            <div style="margin-left: 70%">
+                                <i class="ion-ios-chatboxes icon-big"></i>
+                                <p>Review Date:</p>
+                                <p class="ng-binding"></p>
+                                <h3 class="ng-binding"></h3>
+                                </div>
+                            </div>
+                            <div class="col span-1-of-2 box">
+                                    <div style="margin-right: 15%; margin-left: 20%;">
+                                    <i class="ion-ios-chatboxes icon-big"></i>
+                                    <p>Review Date:</p>
+                                    <p class="ng-binding"></p>
+                                <h3 class="ng-binding"></h3>
+                                </div>
+                            </div>
+                   </div>
+        </div>
+  </div>
+
+
+
+
+
+
+
+    
+</div>
+
+ 
+        <script src="./Cities App_files/angular.min.js.download"></script>
+        <script src="./Cities App_files/angular-local-storage.min.js.download"></script>
+        <script src="./Cities App_files/angular-route.js.download"></script>  
+        <script src="./Cities App_files/jquery-1.10.2.js.download"></script>    
+        <script src="./Cities App_files/xml2json.js.download"></script>
+        <script src="./Cities App_files/app.js.download"></script>
+        <script src="./Cities App_files/indexController.js.download"></script>
+        <script src="./Cities App_files/aboutController.js.download"></script>
+        <script src="./Cities App_files/RegisterController.js.download"></script>
+        <script src="./Cities App_files/RestorePasswordController.js.download"></script>
+        <script src="./Cities App_files/LogInController.js.download"></script>
+        <script src="./Cities App_files/localStorageModel.js.download"></script>
+        <script src="./Cities App_files/HomeController.js.download"></script>
+        <script src="./Cities App_files/pageController.js.download"></script>
+        <script src="./Cities App_files/POIController.js.download"></script> 
+        <script src="./Cities App_files/FavController.js.download"></script>
+ 
+    <!-- Code injected by live-server -->
+<script type="text/javascript">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					head.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					head.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+    
+
+   
+  
+    
+    
+
+    <span style="border-radius: 3px !important; text-indent: 20px !important; width: auto !important; padding: 0px 4px 0px 0px !important; text-align: center !important; font: bold 11px/20px &quot;Helvetica Neue&quot;, Helvetica, sans-serif !important; color: rgb(255, 255, 255) !important; background: url(&quot;data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMzBweCIgd2lkdGg9IjMwcHgiIHZpZXdCb3g9Ii0xIC0xIDMxIDMxIj48Zz48cGF0aCBkPSJNMjkuNDQ5LDE0LjY2MiBDMjkuNDQ5LDIyLjcyMiAyMi44NjgsMjkuMjU2IDE0Ljc1LDI5LjI1NiBDNi42MzIsMjkuMjU2IDAuMDUxLDIyLjcyMiAwLjA1MSwxNC42NjIgQzAuMDUxLDYuNjAxIDYuNjMyLDAuMDY3IDE0Ljc1LDAuMDY3IEMyMi44NjgsMC4wNjcgMjkuNDQ5LDYuNjAxIDI5LjQ0OSwxNC42NjIiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+PHBhdGggZD0iTTE0LjczMywxLjY4NiBDNy41MTYsMS42ODYgMS42NjUsNy40OTUgMS42NjUsMTQuNjYyIEMxLjY2NSwyMC4xNTkgNS4xMDksMjQuODU0IDkuOTcsMjYuNzQ0IEM5Ljg1NiwyNS43MTggOS43NTMsMjQuMTQzIDEwLjAxNiwyMy4wMjIgQzEwLjI1MywyMi4wMSAxMS41NDgsMTYuNTcyIDExLjU0OCwxNi41NzIgQzExLjU0OCwxNi41NzIgMTEuMTU3LDE1Ljc5NSAxMS4xNTcsMTQuNjQ2IEMxMS4xNTcsMTIuODQyIDEyLjIxMSwxMS40OTUgMTMuNTIyLDExLjQ5NSBDMTQuNjM3LDExLjQ5NSAxNS4xNzUsMTIuMzI2IDE1LjE3NSwxMy4zMjMgQzE1LjE3NSwxNC40MzYgMTQuNDYyLDE2LjEgMTQuMDkzLDE3LjY0MyBDMTMuNzg1LDE4LjkzNSAxNC43NDUsMTkuOTg4IDE2LjAyOCwxOS45ODggQzE4LjM1MSwxOS45ODggMjAuMTM2LDE3LjU1NiAyMC4xMzYsMTQuMDQ2IEMyMC4xMzYsMTAuOTM5IDE3Ljg4OCw4Ljc2NyAxNC42NzgsOC43NjcgQzEwLjk1OSw4Ljc2NyA4Ljc3NywxMS41MzYgOC43NzcsMTQuMzk4IEM4Ljc3NywxNS41MTMgOS4yMSwxNi43MDkgOS43NDksMTcuMzU5IEM5Ljg1NiwxNy40ODggOS44NzIsMTcuNiA5Ljg0LDE3LjczMSBDOS43NDEsMTguMTQxIDkuNTIsMTkuMDIzIDkuNDc3LDE5LjIwMyBDOS40MiwxOS40NCA5LjI4OCwxOS40OTEgOS4wNCwxOS4zNzYgQzcuNDA4LDE4LjYyMiA2LjM4NywxNi4yNTIgNi4zODcsMTQuMzQ5IEM2LjM4NywxMC4yNTYgOS4zODMsNi40OTcgMTUuMDIyLDYuNDk3IEMxOS41NTUsNi40OTcgMjMuMDc4LDkuNzA1IDIzLjA3OCwxMy45OTEgQzIzLjA3OCwxOC40NjMgMjAuMjM5LDIyLjA2MiAxNi4yOTcsMjIuMDYyIEMxNC45NzMsMjIuMDYyIDEzLjcyOCwyMS4zNzkgMTMuMzAyLDIwLjU3MiBDMTMuMzAyLDIwLjU3MiAxMi42NDcsMjMuMDUgMTIuNDg4LDIzLjY1NyBDMTIuMTkzLDI0Ljc4NCAxMS4zOTYsMjYuMTk2IDEwLjg2MywyNy4wNTggQzEyLjA4NiwyNy40MzQgMTMuMzg2LDI3LjYzNyAxNC43MzMsMjcuNjM3IEMyMS45NSwyNy42MzcgMjcuODAxLDIxLjgyOCAyNy44MDEsMTQuNjYyIEMyNy44MDEsNy40OTUgMjEuOTUsMS42ODYgMTQuNzMzLDEuNjg2IiBmaWxsPSIjYmQwODFjIj48L3BhdGg+PC9nPjwvc3ZnPg==&quot;) 3px 50% / 14px 14px no-repeat rgb(189, 8, 28) !important; position: absolute !important; opacity: 1 !important; z-index: 8675309 !important; display: block; cursor: pointer !important; border: none !important; -webkit-font-smoothing: antialiased !important; top: 420px; left: 340px;">Save</span><span style="border-radius: 12px; width: 24px !important; height: 24px !important; background: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxtYXNrIGlkPSJtIj48cmVjdCBmaWxsPSIjZmZmIiB4PSIwIiB5PSIwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHJ4PSI2IiByeT0iNiIvPjxyZWN0IGZpbGw9IiMwMDAiIHg9IjUiIHk9IjUiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgcng9IjEiIHJ5PSIxIi8+PHJlY3QgZmlsbD0iIzAwMCIgeD0iMTAiIHk9IjAiIHdpZHRoPSI0IiBoZWlnaHQ9IjI0Ii8+PHJlY3QgZmlsbD0iIzAwMCIgeD0iMCIgeT0iMTAiIHdpZHRoPSIyNCIgaGVpZ2h0PSI0Ii8+PC9tYXNrPjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmYiIG1hc2s9InVybCgjbSkiLz48L3N2Zz4=&quot;) 50% 50% / 14px 14px no-repeat rgba(0, 0, 0, 0.4) !important; position: absolute !important; opacity: 1 !important; z-index: 8675309 !important; display: block; cursor: pointer !important; border: none !important; top: 418px; left: 708px;"></span></body></html>

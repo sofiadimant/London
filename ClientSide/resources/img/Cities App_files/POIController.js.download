@@ -1,0 +1,88 @@
+
+
+angular.module('citiesApp')
+.service('POIService',[ '$http', function ($http) {
+    let serverUrl = 'localhost:3000/'
+    this.getPOI = function () {
+        return $http.get("http://"+serverUrl + "Users/GetAllPOI");
+    }
+    this.getAllCategories = function () {
+        return $http.get("http://"+serverUrl + "Users/AllCategories");
+    }
+    this.serachPOI = function (name) {
+        return $http.get("http://"+serverUrl + "Users/POIName/"+name);
+    }
+}])
+
+.controller('POIController', ['$scope','$location', '$http', 'POIService','localStorageModel', function ($scope,$location, $http, POIService,localStorageModel) {
+    self=this
+    $scope.showWarning=false
+
+    $scope.gest =   $scope.indxCtrl.isGest;
+    console.log( $scope.gest)
+
+ 
+        POIService.getPOI() 
+        .then(function (response) {
+            $scope.records=response.data.poi
+        }, function (response) {
+        });
+
+
+
+
+
+    POIService.getAllCategories()
+    .then(function(response){
+        $scope.categories=response.data
+        console.log(response.data)
+    },function (response) {
+    });
+    $scope.show=true
+    $scope.showCancelBtn=true
+
+    $scope.serachPOI = function () {
+        POIService.serachPOI($scope.searchPOI)
+        .then(function(response){
+            if(response.data!="catch"){
+              $scope.showWarning=false
+              $scope.show=false
+              $scope.showCancelBtn=true
+              $scope.SearchPoi=response.data.poi[0]
+                Console.log($scope.SearchPoi)
+            }
+            else
+              $scope.showWarning=true
+        },function (response) {
+    });
+    }
+  
+    $scope.selectedItemChanged = function () {
+        $scope.showCancelBtn=false
+    }
+    $scope.cancelFilter = function () {
+        $scope.changeFilter=false
+        $scope.selectedCat=""
+        $scope.showCancelBtn=true
+    }
+    $scope.POIToRemove=[]
+
+    $scope.saveFavAtLocalStorage= function (fav) {
+        localStorageModel.updateLocalStorage("favorites",fav)
+        $scope.getLocalStorage();
+    }
+    $scope.value='ion-android-favorite'
+    $scope.remove = function (name) {
+        $scope.POIToRemove.push(name)
+        for(var i=0;i< $scope.records.length;i++){
+            if($scope.records[i].POI_Name===name)
+            {
+            
+                $scope.records.splice(i,1); 
+        }
+      }
+     $scope.saveFavAtLocalStorage($scope.records)  
+    }
+   
+}]);
+

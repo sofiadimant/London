@@ -1,0 +1,216 @@
+angular.module('citiesApp')
+.service('FavService',[ '$http', function ($http) {
+    let serverUrl = 'localhost:3000/'
+
+    this.FavPOI = function (token) {
+         return $http.get("http://"+serverUrl + "POI/GetUsersAllFavPOI?token="+token)  }
+     
+    this.remove = function (name,token) {
+        let user ={
+            POI_Name:name  }       
+        return $http.post("http://"+serverUrl + "POI/RemovePOIFromUserFav?token="+token,user) }
+    
+    this.getUserRanks=function(token){
+        return $http.get("http://"+serverUrl + "POI/getUserRanks?token="+token)
+      }
+  
+    this.addReview = function (review,token) {      
+        return $http.post("http://"+serverUrl + "POI/POIReview?token="+token,review) }
+    
+    this.POIRank = function (rank,token) {      
+        return $http.post("http://"+serverUrl + "POI/POIRank?token="+token,rank) }
+
+    this.SetFavPOIOrderByUser = function (sort,token) {      
+        return $http.post("http://"+serverUrl + "POI/SetFavPOIOrderByUser?token="+token,sort) }
+    
+}])
+
+.controller('FavController', ['$scope','$location', '$http','FavService','localStorageModel', function ($scope,$location, $http,FavService,localStorageModel) {
+   
+    $scope.showRank=true
+    let serverUrl = 'localhost:3000/'
+    $scope.changeFilter=true
+    $scope.buttonName="Order By Rank"
+
+    self.setToken= function(){
+        self.token = localStorageModel.getLocalStorage("token");
+    }
+    self.setToken();
+
+    $scope.first=0;
+    $scope.sortBy = 'rank';
+
+     
+    $scope.saveFavAtLocalStorage= function (fav) {
+        localStorageModel.updateLocalStorage("favorites",fav)
+    }
+    $scope.getLocalStorage=function(){
+        let fav = localStorageModel.getLocalStorage("favorites")
+      return fav
+    }
+
+    $scope.FavPOI = function () {   
+        FavService.FavPOI(self.token)     
+        .then(function (response) {
+            $scope.fav=response.data.poi        
+        })
+        .then(function (response) {
+            FavService.getUserRanks(self.token)     
+            .then(function (response2) {
+                $scope.rank=response2.data.poi                         
+            })
+            .then(function (response) {
+                $scope.unit=[]
+                console.log($scope.rank.length)
+                for(var i=0;i<$scope.fav.length;i++) 
+                {
+                for(var j=0;j<$scope.rank.length;j++)
+                    {         
+                    if( $scope.fav[i].POI_Name=== $scope.rank[j].POI_Name)
+                        $scope.unit.push({POI_Name: $scope.fav[i].POI_Name,Rank_Per:$scope.fav[i].Rank_Per, Category_Name:$scope.fav[i].Category_Name  ,  POI_Picture: $scope.fav[i].POI_Picture,rank: $scope.rank[j].POI_Order })
+                    }
+                }               
+                $scope.records= $scope.unit
+                for(var i=0;i<$scope.records.length;i++)
+                {
+                    $scope.NumOfPOI[i]=i+1
+                }
+                console.log( $scope.records)   
+                $scope.saveFavAtLocalStorage($scope.records)    
+                if( $scope.records.length>1)
+                     $scope.showSort=true
+              else
+                     $scope.showSort=false 
+            }    
+        )}
+        );
+    }
+
+ /*----------------------------Personal Sort + save at db--------------------------------*/
+    $scope.SortByUser = function (sort) {
+        if(sort.POI_Name==undefined||sort.rank== undefined){
+            $scope.warnning="please insert rank and point"
+            return
+        }       
+        personalSort= $scope.records
+        for(var i=0;i<personalSort.length;i++)
+        {
+             if(personalSort[i].POI_Name===sort.POI_Name)
+             {
+                 poi=personalSort[i]
+                 personalSort.splice(i,1); 
+             }
+        }
+         var rank=sort.rank
+         personalSort.push({ POI_Name:poi.POI_Name,Category_Name:poi.Category_Name,Rank_Per:poi.Rank_Per  ,POI_Picture:poi.POI_Picture,rank:rank})
+         $scope.records=personalSort
+         $scope.warnning="Rank is Set"
+         var sort = {POI_Array:[{POI_Name:poi.POI_Name,Order: rank}]};
+         FavService.SetFavPOIOrderByUser(sort,self.token)
+         .then(function (response) {
+           console.log(response) })
+        }
+ /*----------------Remove from local storage----------------------*/
+    $scope.POIToRemove=[]
+    $scope.remove = function (name) {
+        $scope.POIToRemove.push(name)
+        for(var i=0;i< $scope.records.length;i++){
+            if($scope.records[i].POI_Name===name)
+            {          
+                $scope.records.splice(i,1); 
+            }
+      }
+      if($scope.records.length===0){
+           $scope.saveFavAtLocalStorage("empty") 
+           $scope.message="no favorites"
+      }
+     else
+           $scope.saveFavAtLocalStorage($scope.records)  
+    $scope.SaveChanges()
+    }
+    
+/*--------------------update changes at records at db------------*/
+    $scope.SaveChanges = function () {
+        for(var i=0;i< $scope.POIToRemove.length;i++){
+            FavService.remove($scope.POIToRemove[i],self.token)
+                      .then(function (response) {
+                       // $scope.FavPOI()
+                        console.log(response) })
+                    }            
+    }
+/*-----------------------Add Review---------------------------------*/
+    $scope.AddReview = function (review) {  
+     var answer={POI_Review:review,POI_Name: $scope.ReviewPoiName}  
+     if(answer.POI_Review!=undefined&&answer.POI_Review!="" ){
+             FavService.addReview(answer, self.token)      
+               .then(function (response) { 
+                $scope.addReviewResult="Review Add Succefully"
+                console.log(response)
+            })
+        }
+     else
+         $scope.addReviewResult="Review Empty"
+    }
+    $scope.rank=[1,2,3,4,5]
+/*-----------------------Add Rank---------------------------------*/
+    $scope.AddRank = function () {
+        console.log("dsfasd")
+        var toSend={POI_Name: $scope.ReviewPoiName,POI_Rank: $scope.selectedRank }
+        FavService.POIRank(toSend, self.token)  
+        .then(function (response) { 
+            console.log(response)
+            $scope.RankViewResult="Rank Added Succefully"
+            $scope.UpdateRankInLoaclStorage(response.data);
+        })
+    }
+
+    $scope.UpdateRankInLoaclStorage = function (rank) {
+        for(var i=0;i<$scope.records.length;i++)
+        {
+            if($scope.records[i].POI_Name== $scope.ReviewPoiName)
+                 $scope.records[i].Rank_Per=rank[0].Rank_Per
+        }
+        $scope.saveFavAtLocalStorage($scope.records)
+    }
+/*----------------modal----------------------*/
+    var modal = document.getElementById('myModal');
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+   $scope.click = function (poiName) {
+    modal.style.display = "block";
+    $scope.ReviewPoiName=poiName
+   }
+    span.onclick = function() {
+        modal.style.display = "none";
+      
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+/*-----------------------------main-----------------------------*/
+    $scope.NumOfPOI=[]
+    if($scope.getLocalStorage()!==null){
+        ans=$scope.getLocalStorage()  
+        if(ans==="empty"){
+               $scope.message="no favorites" }
+      else{     
+          $scope.records=$scope.getLocalStorage()
+          for(var i=0;i<$scope.records.length;i++)
+          {
+              $scope.NumOfPOI[i]=i+1
+          }
+          if( $scope.records.length>1)
+               $scope.showSort=true
+          else
+              $scope.showSort=false
+      }
+    }
+    else {
+            $scope.FavPOI()
+         }
+ 
+  //   $scope.FavPOI()
+}]);
